@@ -1,0 +1,30 @@
+from sklearn import tree
+import pandas as pd
+
+data = pd.read_csv('thLotto_49-59.csv')
+day = list(zip(data['day'],data['month'],data['year']))
+first = data['first']
+digit3 = data['3digit']
+last_2digit_top = data['last_2digit_top']
+first_3digit_1 = data['first_3digit_1']
+first_3digit_2 = data['first_3digit_2']
+last_3digit_1 = data['last_3digit_1']
+last_3digit_2 = data['last_3digit_2']
+last_2digit_down = data['last_2digit_down']
+iD = int(input("Day: "))
+iM = int(input("Month: "))
+iY = int(input("Year: "))
+
+def perdictLotto(d,m,y,data1,data2):
+	classifier = tree.DecisionTreeClassifier()
+	classifier.fit(data1,data2)
+	return classifier.predict([[d,m,y]])[0]
+	
+print("\nFirst: %.0f"%perdictLotto(iD,iM,iY,day,first))
+print("Three digit: %.0f"%perdictLotto(iD,iM,iY,day,digit3))
+print("The first three digits: %.0f"%perdictLotto(iD,iM,iY,day,first_3digit_1))
+print("                        %.0f"%perdictLotto(iD,iM,iY,day,first_3digit_2))
+print("The last three digits:  %.0f"%perdictLotto(iD,iM,iY,day,last_3digit_1))
+print("                        %.0f"%perdictLotto(iD,iM,iY,day,last_3digit_2))
+print("Two digits:    %.0f"%perdictLotto(iD,iM,iY,day,last_2digit_top))
+print("               %.0f"%perdictLotto(iD,iM,iY,day,last_2digit_down))
